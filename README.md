@@ -7,6 +7,7 @@ In this project, I developed an ansible playbook which preparing OpenShit Nodes 
 The inventory file that used for the OpenShift installation is the same inventory here
 
 ## Usage
+This playbook have to run from the master node.
 
 Few parameters have to be provided when running this playbook:
 * Subscription credentials
