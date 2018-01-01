@@ -1,0 +1,57 @@
+---
+- hosts: localhost
+  remote_user: root
+  tasks:
+    - stat:
+          path: ~/.ssh/id_rsa.pub
+      register: rsa_key
+
+    - name: Generating RSA key
+      shell: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa
+      when: rsa_key.stat.islnk is not defined
+    - name: deplay SSH Key for all host using root \ "{{ ssh_password }}" 
+      shell: sshpass -p {{ ssh_password }} ssh-copy-id -o StrictHostKeyChecking=no root@{{ item }}
+      with_items: "{{ groups['nodes'] }}"
+
+- hosts: nodes
+  remote_user: root
+  tasks:
+    - name: Register as user ("{{ subscription_username }}") and auto-subscribe to available content.
+      redhat_subscription:
+          state: present
+          username: "{{ subscription_username }}"
+          password: "{{ subscription_password }}"
+          autosubscribe: true
+          pool_ids: 8a85f9843affb61f013b3ef6a5fe0b9a
+
+    - name: Enable repositories
+      shell: subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.7-rpms" --enable="rhel-7-fast-datapath-rpms"
+  
+    - name: Updating yum to latest
+      yum:
+          name: '*'
+          state: latest
+    - name: Install OCP reqired packages\rpms
+      yum:
+          name: "{{ item }}"
+          state: latest
+      with_items:
+          - atomic-openshift-excluder 
+          - atomic-openshift-docker-excluder 
+          - atomic-openshift-utils
+          - wget
+          - git
+          - net-tools
+          - bind-utils
+          - iptables-services
+          - bridge-utils
+          - bash-completion
+          - kexec-tools
+          - sos
+          - psacct
+          - sshpass  
+
+    - name: Post installations actions
+      shell: atomic-openshift-excluder unexclude
+
+
