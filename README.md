@@ -15,5 +15,5 @@ Few parameters have to be provided when running this playbook:
 
 ## Example
 ```shell
-ansible-playbook -i invenroty.txt pre-ocp-install.yaml --extra-vars "ssh_password=change_me" --extra-vars "subscription_username=username@domain.com" --extra-vars "subscription_password=super_secret_password"
+ansible-playbook -i inventory.txt pre-ocp-install.yaml --extra-vars "ssh_password=change_me" --extra-vars "subscription_username=username@domain.com" --extra-vars "subscription_password=super_secret_password"
 ```
