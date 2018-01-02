@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#echo "Preparing master node for ansible first run..."
-
 function help {
 	echo ""
         echo "This is the preparation utile for RHEL before ansible run"
@@ -28,23 +26,25 @@ done
 
 function init() { 
 
-	echo "Setting subscription on node"
-	subscription-manager register --username=$1 --password=$2
+	echo "Setting subscription on node"  | tee -a RHEL_prepare.log
+	subscription-manager register --username=$1 --password=$2 > RHEL_prepare.log
 	
-	echo "Attaching to pool "$3
-	subscription-manager attach --pool=$3
+	echo "Attaching to pool "$3  | tee -a RHEL_prepare.log
+	subscription-manager attach --pool=$3  >> RHEL_prepare.log
 	
-	echo "Adding yum repos"
-	subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpm"
+	echo "Adding yum repos"  | tee -a RHEL_prepare.log
+	subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpm"  >> RHEL_prepare.log
 	
 }
 
 function install_rpms {
-	"Installing required packages"
-	yum install -y git ansible
 
-	echo "Cloning OSE-pre-install project to local machine"
-	git clone https://github.com/shalomnaim1/OSE-pre-install.git
+	echo "Installing required packages"  | tee -a RHEL_prepare.log
+	rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  >> RHEL_prepare.log
+	yum install -y git ansible  >> RHEL_prepare.log
+
+	echo "Cloning OSE-pre-install project to local machine"  | tee -a RHEL_prepare.log
+	git clone https://github.com/shalomnaim1/OSE-pre-install.git  >> RHEL_prepare.log
 
 }
 
