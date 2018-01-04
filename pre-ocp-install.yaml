@@ -16,7 +16,7 @@
 - hosts: nodes
   remote_user: root
   tasks:
-    - name: Register as user ("{{ subscription_username }}") and auto-subscribe to available content.
+    - name: Register as user ("{{ subscription_username }}").
       redhat_subscription:
           state: present
           username: "{{ subscription_username }}"
