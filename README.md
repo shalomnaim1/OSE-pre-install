@@ -22,9 +22,10 @@ ansible-playbook  pre-ocp-install.yaml \
                  --extra-vars "subscription_password=super_secret_password"
 ```
 ### Note:
-Since RHEL system require subscription configuration, before installing ansible and git I wrote additional script who doing all the dirty work
+Since RHEL system requires subscription configuration, before installing ansible and git I wrote additional script who doing all the dirty work.
 
-to use it just copy it from this repo to your master node useing
+To use the RHEL preparation script just execute the following command in your master node
+
 ```{shell}
 curl -o https://raw.githubusercontent.com/shalomnaim1/OSE-pre-install/master/RHEL_prepare.sh
 ```
@@ -33,5 +34,10 @@ and start it by executing:
 ```{shell}
 sh RHEL_prepare.sh -u <subscription_user> -p <subscription_password>
 ```
+
+This script take care the following tasks:
+* Configure subscription on the master node
+* Installing Git and ansible on the master node
+* Clone this repo to the master node
 
 Most of the output of the script is redirected into RHEL_prepare.log, which exist in the same folder RHEL_prepare.sh executed from
