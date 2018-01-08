@@ -24,8 +24,11 @@ do
  esac
 done
 
+set -ex
+
 function init() { 
 
+	
 	echo "Setting subscription on node"  | tee -a RHEL_prepare.log
 	subscription-manager register --username=$1 --password=$2 > RHEL_prepare.log
 	
@@ -50,3 +53,6 @@ function install_rpms {
 
 init $SUBS_USER $PASSWORD $POOL_ID
 install_rpms
+
+set +x
+
