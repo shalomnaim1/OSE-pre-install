@@ -27,7 +27,7 @@ Since RHEL system requires subscription configuration, before installing ansible
 To use the RHEL preparation script just execute the following command in your master node
 
 ```{shell}
-curl -o https://raw.githubusercontent.com/shalomnaim1/OSE-pre-install/master/RHEL_prepare.sh
+curl -o RHEL_prepare.sh https://raw.githubusercontent.com/shalomnaim1/OSE-pre-install/master/RHEL_prepare.sh
 ```
 
 and start it by executing:
