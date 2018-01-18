@@ -12,7 +12,6 @@ function help {
 
 }
 
-POOL_ID="8a85f9843affb61f013b3ef6a5fe0b9a"
 while getopts ":u:p:P:h" option
 do
  case "${option}"
