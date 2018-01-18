@@ -19,7 +19,8 @@ ansible-playbook  pre-ocp-install.yaml \
                   -i inventory.txt \
                  --extra-vars "ssh_password=change_me" \ 
                  --extra-vars "subscription_username=username@domain.com" \
-                 --extra-vars "subscription_password=super_secret_password"
+                 --extra-vars "subscription_password=super_secret_password" \
+                 --extra-vars "pool_id=<your_pool_id>"
 ```
 ### Note:
 Since RHEL system requires subscription configuration, before installing ansible and git I wrote additional script who doing all the dirty work.
@@ -32,7 +33,7 @@ curl -o RHEL_prepare.sh https://raw.githubusercontent.com/shalomnaim1/OSE-pre-in
 
 and start it by executing:
 ```{shell}
-sh RHEL_prepare.sh -u <subscription_user> -p <subscription_password>
+sh RHEL_prepare.sh -u <subscription_user> -p <subscription_password> -P <pool_id>
 ```
 
 This script take care the following tasks:
