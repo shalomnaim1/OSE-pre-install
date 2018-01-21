@@ -6,11 +6,12 @@ function help {
         echo "Available options:"
         echo "-u: Subscription username"
         echo "-p: Subscription password"
-	echo "-P: Pool Id to attach to (Default set to 8a85f9843affb61f013b3ef6a5fe0b9a)"
+	echo "-P: Pool Id to attach to (Default set to --auto)"
         echo "-h: Display this help message"
         echo ""
 
 }
+
 
 POOL_ID="--auto"
 while getopts ":u:p:P:h" option
