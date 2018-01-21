@@ -6,25 +6,30 @@ function help {
         echo "Available options:"
         echo "-u: Subscription username"
         echo "-p: Subscription password"
-	echo "-P: Pool Id to attach to (Default set to 8a85f9843affb61f013b3ef6a5fe0b9a)"
+	echo "-P: Pool Id to attach to (Default set to --auto)"
         echo "-h: Display this help message"
         echo ""
 
 }
 
+
+POOL_ID="--auto"
 while getopts ":u:p:P:h" option
 do
  case "${option}"
  in
  u) SUBS_USER=${OPTARG};;
  p) PASSWORD=${OPTARG};;
- P) POOL_ID=${OPTARG};;
+ P) POOL_ID="--pool ${OPTARG}";;
  h) help >&2; exit;;
  esac
 done
 
+set -ex
+
 function init() { 
 
+	
 	echo "Setting subscription on node"  | tee -a RHEL_prepare.log
 	subscription-manager register --username=$1 --password=$2 > RHEL_prepare.log
 	
@@ -49,3 +54,6 @@ function install_rpms {
 
 init $SUBS_USER $PASSWORD $POOL_ID
 install_rpms
+
+set +x
+
