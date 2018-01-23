@@ -7,6 +7,7 @@ function help {
         echo "-u: Subscription username"
         echo "-p: Subscription password"
 	echo "-P: Pool Id to attach to (Default set to --auto)"
+	echo "-s: auth subscription server (Default set to subscription.rhsm.redhat.com)"
         echo "-h: Display this help message"
         echo ""
 
@@ -14,13 +15,15 @@ function help {
 
 
 POOL_ID="--auto"
-while getopts ":u:p:P:h" option
+AUTH_SERVER="subscription.rhsm.redhat.com"
+while getopts ":u:p:P:s:h" option
 do
  case "${option}"
  in
  u) SUBS_USER=${OPTARG};;
  p) PASSWORD=${OPTARG};;
  P) POOL_ID="--pool ${OPTARG}";;
+ s) AUTH_SERVER=${OPTARG};;
  h) help >&2; exit;;
  esac
 done
@@ -29,7 +32,10 @@ set -ex
 
 function init() { 
 
-	
+
+	echo "Update subscription auth server"
+        sed -i 's/hostname = .*/hostname = ${auto_server}/g' etc/rhsm/rhsm.conf	
+
 	echo "Setting subscription on node"  | tee -a RHEL_prepare.log
 	subscription-manager register --username=$1 --password=$2 > RHEL_prepare.log
 	
