@@ -69,4 +69,10 @@
     - name: Post installations actions
       shell: atomic-openshift-excluder unexclude
 
-
+    - name: Install RHEV agent
+      shell: |
+        subscription-manager repos --enable rhel-7-server-rh-common-rpms
+        yum -y install rhevm-guest-agent-common
+        systemctl start ovirt-guest-agent.service
+        systemctl enable ovirt-guest-agent.service
+        subscription-manager repos --disable rhel-7-server-rh-common-rpms
