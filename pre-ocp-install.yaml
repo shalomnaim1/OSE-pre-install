@@ -17,11 +17,7 @@
   remote_user: root
   tasks:
     - name: Update subscription auth server
-      replace:
-          path: /etc/rhsm/rhsm.conf
-          regexp: 'hostname = (.*)'
-          replace: 'hostanem = {{ auth_server}}'
-          backup: yes
+      shell: sed -i "s/hostname = .*/hostname = {{ auth_server}}/g" /etc/rhsm/rhsm.conf
 
     - name: Register as user ("{{ subscription_username }}").
       redhat_subscription:
