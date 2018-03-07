@@ -45,13 +45,14 @@ done
 
 function config_view {
    echo ${Cyan}
-   echo "params values"
+   echo "****************************************"
+   echo "Using the following parameters:"
    echo "****************************************"
    echo "Subscription username: ${SUBS_USER}"
    echo "Subscription password: ${PASSWORD}"
    echo "Force? : ${FORCE}"
    echo "Pool ID: ${POOL_ID}"
-   echo "Auto server: ${AUTH_SERVER}"
+   echo "Auth server: ${AUTH_SERVER}"
    echo "****************************************"
    echo ${NC}
    echo
@@ -61,7 +62,7 @@ function init() {
 
 
 	echo "${Cyan}Update subscription auth server${NC}"
-        sed -i "s/hostname = .*/hostname = ${AUTH_SERVER}/g" /etc/rhsm/rhsm.conf
+    sed -i "s/hostname = .*/hostname = ${AUTH_SERVER}/g" /etc/rhsm/rhsm.conf
 
 	echo "${Cyan}Setting subscription on node${NC}"  | tee -a RHEL_prepare.log
 	subscription-manager register --username=$1 --password=$2 ${FORCE} > RHEL_prepare.log
@@ -81,7 +82,6 @@ function install_rpms {
 
 	echo "${Cyan}Cloning OSE-pre-install project to local machine${NC}"  | tee -a RHEL_prepare.log
 	git clone https://github.com/shalomnaim1/OSE-pre-install.git  >> RHEL_prepare.log
-
 }
 
 config_view

@@ -16,6 +16,14 @@
 - hosts: nodes
   remote_user: root
   tasks:
+      #TODO: Add hostname validataion
+      #TODO" edit auto server
+
+#    - name: Validate correctnce of hostname
+#      hostname:
+#        name: "{{ lookup('dig', '10.8.196.81/PTR')}}"
+#      when: not ("{{ lookup('dig', '10.8.196.81/PTR') }}" == ansible_default_ipv4.address)
+
     - name: Update subscription auth server
       replace:
           path: /etc/rhsm/rhsm.conf
