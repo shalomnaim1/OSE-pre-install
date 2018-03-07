@@ -28,7 +28,8 @@
           state: present
           username: "{{ subscription_username }}"
           password: "{{ subscription_password }}"
-          autosubscribe: true
+          pool_ids: "{{ pool_id }}"
+          autosubscribe: true 
 
     - name: Enable repositories
       shell: subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.7-rpms" --enable="rhel-7-fast-datapath-rpms"
