@@ -16,14 +16,6 @@
 - hosts: nodes
   remote_user: root
   tasks:
-      #TODO: Add hostname validataion
-      #TODO" edit auto server
-
-#    - name: Validate correctnce of hostname
-#      hostname:
-#        name: "{{ lookup('dig', '10.8.196.81/PTR')}}"
-#      when: not ("{{ lookup('dig', '10.8.196.81/PTR') }}" == ansible_default_ipv4.address)
-
     - name: Update subscription auth server
       replace:
           path: /etc/rhsm/rhsm.conf
@@ -45,6 +37,7 @@
       yum:
           name: '*'
           state: latest
+
     - name: Install OCP reqired packages\rpms
       yum:
           name: "{{ item }}"
@@ -63,7 +56,15 @@
           - kexec-tools
           - sos
           - psacct
-          - sshpass  
+          - sshpass
+
+    - name: Install iSCSI reqired packages\rpms
+      yum:
+          name: "{{ item }}"
+          state: latest
+      with_items:
+          - sg3_utils
+          - iscsi-initiator-utils
 
     - name: Post installations actions
       shell: atomic-openshift-excluder unexclude
